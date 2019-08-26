@@ -1,20 +1,25 @@
-
-
 module Luhn
+  
     def self.is_valid?(number)
+      digit = number.to_s.reverse  #read from right to left
 
-      @number = number.reverse
+      digit2 =digit.split("").map { |d| d.to_i }
+      
+      sum = 0
 
-      array =  @number.digits.each_with_index.map do |n, i|
-        (i % 2 != 0)? n * 2 : n 
+      digit2.length.times do |num|
+        digit2[num] *= 2 if num.odd?
+        digit2[num] -= 9 if digit2[num] >= 10
       end
-  
-      array = array.map{|n| (n >= 10)? n - 9 : n}
-  
-      return (array.sum % 10 == 0)
-     
+
+      if digit2.reduce(:+) % 10 === 0
+        return true
+      else 
+        return false
+      end
+
+    
     end
     
 end
-
 
